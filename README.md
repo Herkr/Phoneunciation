@@ -1,6 +1,6 @@
 # Phoneunciation
 Screenshot of Phoneunciation application
-![Architecture]()
+![Architecture](https://github.com/Herkr/Phoneunciation/blob/main/Phoneunciation_application.png)
 
 This application uses Allosaurus to transcribe phones from audio files. 
 Allosaurus can be found here: https://github.com/xinjli/allosaurus/tree/master
