@@ -23,7 +23,7 @@ class VoiceRecorder:
         self.model_fao = read_recognizer('fa2024')
         self.audio_files = glob('words/*.wav')
         self.audio_files_len = len(glob('words/*.wav'))
-        self.randomn = random.randrange(0,self.audio_files_len)
+        self.randomn = random.randrange(0,self.audio_files_len-1)
         self.rand_audio = self.audio_files[self.randomn]
         self.wordtext = self.rand_audio.removeprefix('words/').removesuffix('.wav')
 
@@ -225,28 +225,30 @@ class VoiceRecorder:
         recorder.delete()
 
     def play_AI(self):
-        playsound(self.audio_files[self.randomn])
+        playsound(self.rand_audio)
 
     def play_you(self):
         playsound('audio_recording.wav')
 
     def shuffle_word(self):
         self.randomn = random.randrange(0,self.audio_files_len)
-        self.wordtext = self.audio_files[self.randomn].removeprefix('words/').removesuffix('.wav')
+        self.rand_audio = self.audio_files[self.randomn]
+
+        self.wordtext = self.rand_audio.removeprefix('words/').removesuffix('.wav')
         self.label5.config(text="Word: " + self.wordtext + " ⧉")
         self.label6.config(text="Word: " + self.wordtext + " ⧉")
 
-        self.modelphones = self.get_phones(self.audio_files[self.randomn], 0)
+        self.modelphones = self.get_phones(self.rand_audio, 0)
         self.modelphones_colors = ["green"] * len(self.modelphones)
-        self.modelphones_prob = self.get_phones(self.audio_files[self.randomn], 1)
+        self.modelphones_prob = self.get_phones(self.rand_audio, 1)
 
-        self.modelphones_second = self.get_phones(self.audio_files[self.randomn], 2)
+        self.modelphones_second = self.get_phones(self.rand_audio, 2)
         self.modelphones_second_colors = ["yellow"] * len(self.modelphones_second)
-        self.modelphones_second_prob = self.get_phones(self.audio_files[self.randomn], 3)
+        self.modelphones_second_prob = self.get_phones(self.rand_audio, 3)
 
-        self.modelphones_third = self.get_phones(self.audio_files[self.randomn], 4)
+        self.modelphones_third = self.get_phones(self.rand_audio, 4)
         self.modelphones_third_colors = ["orange"] * len(self.modelphones_third)
-        self.modelphones_third_prob = self.get_phones(self.audio_files[self.randomn], 5)
+        self.modelphones_third_prob = self.get_phones(self.rand_audio, 5)
 
         for l in self.label7_labels:
             l.destroy()
@@ -261,20 +263,20 @@ class VoiceRecorder:
             l.destroy()
         self.label11_labels.clear()
 
-        for index,word in enumerate(self.modelphones):
-            self.label7_1 = tk.Label(self.labelframe4, text=word, font=('Arial', round(10+(30*self.modelphones_prob[index]))), fg=self.modelphones_colors[index])
+        for index,phone in enumerate(self.modelphones):
+            self.label7_1 = tk.Label(self.labelframe4, text=phone, font=('Arial', round(10+(30*self.modelphones_prob[index]))), fg=self.modelphones_colors[index])
             self.label7_1.grid(row=0, column=index+1, sticky=tk.W)
             self.label7_labels.append(self.label7_1)
         self.label8_1 = tk.Label(self.labelframe5, font=('Arial', 16))
         self.label8_1.grid(row=0, column=index+1, sticky=tk.W)
         self.label8_labels.append(self.label8_1)
-        for index,word in enumerate(self.modelphones_second):
-            self.label9_1 = tk.Label(self.labelframe6, text=word, font=('Arial', round(10+(30*self.modelphones_second_prob[index]))), fg=self.modelphones_second_colors[index])
+        for index,phone in enumerate(self.modelphones_second):
+            self.label9_1 = tk.Label(self.labelframe6, text=phone, font=('Arial', round(10+(30*self.modelphones_second_prob[index]))), fg=self.modelphones_second_colors[index])
             self.label9_1.grid(row=0, column=index+1, sticky=tk.W)
             self.label9_labels.append(self.label9_1)
         self.label12.config(text="")
-        for index,word in enumerate(self.modelphones_third):
-            self.label11_1 = tk.Label(self.labelframe7, text=word, font=('Arial', round(10+(30*self.modelphones_third_prob[index]))), fg=self.modelphones_third_colors[index])
+        for index,phone in enumerate(self.modelphones_third):
+            self.label11_1 = tk.Label(self.labelframe7, text=phone, font=('Arial', round(10+(30*self.modelphones_third_prob[index]))), fg=self.modelphones_third_colors[index])
             self.label11_1.grid(row=0, column=index+1, sticky=tk.W)
             self.label11_labels.append(self.label11_1)
 
