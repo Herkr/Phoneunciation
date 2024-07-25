@@ -169,18 +169,14 @@ class VoiceRecorder:
         newphones_colors = ["red"] * len(newphones)
         newphones_prob = self.get_phones('audio_recording.wav', 1)
 
-        # if I want the probability size from the reference, then uncomment in the for loop
         for index,p in enumerate(newphones):
             if len(self.modelphones) >= index+1:
                 if p == self.modelphones[index]:
                     newphones_colors[index] = "green"
-                    #newphones_prob[index] = self.modelphones_prob[index]
                 if p == self.modelphones_second[index]:
                     newphones_colors[index] = "yellow"
-                    #newphones_prob[index] = self.modelphones_second_prob[index]
                 if p == self.modelphones_third[index]:
                     newphones_colors[index] = "orange"
-                    #newphones_prob[index] = self.modelphones_third_prob[index]
 
         for l in self.label8_labels:
             l.destroy()
